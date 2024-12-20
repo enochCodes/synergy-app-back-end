@@ -7,11 +7,6 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model Role {
-  name String @id @db.VarChar(255)
-  User User[]
-}
-
 model User {
   id        Int       @id @default(autoincrement())
   email     String    @unique @db.VarChar(255)
@@ -19,7 +14,9 @@ model User {
   role      String    @db.VarChar(255)
   createdat DateTime? @default(now()) @db.Timestamp(6)
   updatedat DateTime? @default(now()) @db.Timestamp(6)
-  Role      String      @relation(fields: [role], references: [name], onDelete: NoAction, onUpdate: NoAction, map: "fk_role")
+  firstName String    @db.VarChar(255)
+  lastName  String    @db.VarChar(255)
+  userName  String    @db.VarChar(255)
 
   @@index([email], map: "idx_user_email")
 }

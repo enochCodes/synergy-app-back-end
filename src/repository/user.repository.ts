@@ -1,9 +1,8 @@
-import { PrismaClient } from '@prisma/client';
+import { PrismaClient, Prisma } from '@prisma/client';
 import { User } from '@prisma/client';
 
-
 const prisma = new PrismaClient();
-export const createUser = async (data: { email: string; password: string; role?: string }) => {
+export const createUser = async (data: Prisma.UserCreateInput) => {
   return await prisma.user.create({
     data,
   });
@@ -16,7 +15,7 @@ export const findUserByEmail = async (email: string): Promise<User | null> => {
   });
 };
 
-export const updateUser = async (id: number, data: Partial<{ email: string; password: string; role: string }>) => {
+export const updateUser = async (id: number, data: Prisma.UserUpdateInput) => {
   return await prisma.user.update({
     where: { id },
     data,
