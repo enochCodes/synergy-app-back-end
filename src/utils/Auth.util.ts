@@ -15,7 +15,6 @@ export function GeneratesJWTToken(user: UserSignUpDTO): string {
     return token;
 }
 export function VerifyJWTToken(token: string): object | string {
-    const config = new Config();
     try {
         return jwt.verify(token, config.getRSAPublicKey(), { algorithms: ['RS256'] });
     } catch {

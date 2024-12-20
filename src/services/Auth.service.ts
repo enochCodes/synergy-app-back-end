@@ -26,18 +26,18 @@ class AuthService {
      */
     public async signup(user: UserSignUpDTO): Promise<ResponseDTO> {
         if (!user.userName || !user.email || !user.password || !user.firstName || !user.lastName) {
-            return createErrorResponse('All fields are required');
+            return createErrorResponse('All fields are required', 400);
         }
 
         const emailRegex = /\S+@\S+\.\S+/;
         if (!emailRegex.test(user.email)) {
-            return createErrorResponse('Invalid email address');
+            return createErrorResponse('Invalid email address', 400);
 
         }
 
         const existingUser = await findUserByEmail(user.email);
         if (existingUser) {
-            return createErrorResponse('User already exists');
+            return createErrorResponse('User already exists', 409);
         }
 
         const hashedPassword = await passwordHash(user.password);
@@ -47,11 +47,11 @@ class AuthService {
         });
 
         if (!newUser) {
-            return createErrorResponse('Failed to create user');
+            return createErrorResponse('Failed to create user', 500);
         }
 
         const token = await GeneratesJWTToken(user);
-        return createSuccessResponse(token, 'User created successfully');
+        return createSuccessResponse(token, 'User created successfully', 201);
     }
     /**
      * Authenticates a user with the provided email and password.
@@ -64,7 +64,7 @@ class AuthService {
         // handle login
         const user = await findUserByEmail(UserCredential.email);
         if (!user) {
-            return createErrorResponse('User not found');
+            return createErrorResponse('User not found', 404);
         }
 
         const isPasswordValid = await new Promise<boolean>((resolve, reject) => {
@@ -78,7 +78,7 @@ class AuthService {
         });
 
         if (!isPasswordValid) {
-            return createErrorResponse('Invalid password');
+            return createErrorResponse('Invalid password', 401);
         }
 
         const token = GeneratesJWTToken({
@@ -91,7 +91,7 @@ class AuthService {
             userName: user.userName
         });
 
-        return createSuccessResponse(token, 'Login successful');
+        return createSuccessResponse(token, 'Login successful', 200);
     }
 }
 

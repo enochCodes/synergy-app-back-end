@@ -39,7 +39,7 @@ export class AuthController {
         const authService = new AuthService();
         const response = await authService.login(UserLoginData);
         res
-            .status(200)
+            .status(response.status)
             .json(response);
 
     }

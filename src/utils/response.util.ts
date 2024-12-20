@@ -1,19 +1,19 @@
 import { ResponseDTO } from '../dto/response.dto';
 
 
-export function createErrorResponse(message: string): ResponseDTO {
+export function createErrorResponse(message: string, code: number): ResponseDTO {
     return {
-        status: 400,
+        status: code,
         Data: '',
         success: false,
         message,
     };
 }
 
-export function createSuccessResponse(token: string, message: string): ResponseDTO {
+export function createSuccessResponse(Data: string, message: string, code: number): ResponseDTO {
     return {
-        status: 200,
-        Data: token,
+        status: code,
+        Data: Data,
         success: true,
         message,
     };
