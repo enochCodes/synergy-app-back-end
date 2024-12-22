@@ -4,9 +4,11 @@ import { UserSignUpDTO } from '../dto/signup.user.dto';
 import { LoginDTO } from '../dto/Login.user.dto';
 import AuthService from '../services/Auth.service';
 
+const authService = new AuthService();
+
 
 export class AuthController {
-    static async SignUp(req: Request, res: Response) {
+    public async SignUp(req: Request, res: Response) {
         // handle signup
         const userData: UserSignUpDTO = {
             userName: req.body.userName,
@@ -16,7 +18,6 @@ export class AuthController {
             lastName: req.body.lastName,
             role: 'BUSINESS'
         };
-        const authService = new AuthService();
         try {
             const response = await authService.signup(userData);
             res
@@ -30,13 +31,12 @@ export class AuthController {
         }
     }
 
-    static async Login(req: Request, res: Response) {
+    public async Login(req: Request, res: Response) {
         // handle login
         const UserLoginData: LoginDTO = {
             email: req.body.email,
             password: req.body.password,
         }
-        const authService = new AuthService();
         const response = await authService.login(UserLoginData);
         res
             .status(response.status)

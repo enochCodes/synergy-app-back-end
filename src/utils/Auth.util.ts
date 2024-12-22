@@ -1,11 +1,11 @@
 import jwt from 'jsonwebtoken';
 import bcrypt from 'bcrypt';
-import { UserSignUpDTO } from '../dto/signup.user.dto';
+import { UserDTO } from '../dto/user.dto';
 import { Config } from '../config/config';
 
 const config = new Config();
 
-export function GeneratesJWTToken(user: UserSignUpDTO): string {
+export function GeneratesJWTToken(user: UserDTO): string {
     const RSASecretKey = config.getRSAPrivateKey();
     const token = jwt.sign(
         { id: user.id?.toString(), firstName: user.firstName, email: user.email, role: user.role },
@@ -17,7 +17,8 @@ export function GeneratesJWTToken(user: UserSignUpDTO): string {
 export function VerifyJWTToken(token: string): object | string {
     try {
         return jwt.verify(token, config.getRSAPublicKey(), { algorithms: ['RS256'] });
-    } catch {
+    } catch (error) {
+        console.error('Token verification failed:', error);
         throw new Error('Token verification failed');
     }
 }

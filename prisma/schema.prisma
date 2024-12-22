@@ -7,16 +7,24 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+model InfluencerProfile {
+  profile_id    Int    @id @default(autoincrement())
+  influencer_id Int    @unique
+  niche         String @db.VarChar(255)
+  User          User   @relation(fields: [influencer_id], references: [id], onDelete: Cascade, map: "InfluencerProfile_Id_fkey")
+}
+
 model User {
-  id        Int       @id @default(autoincrement())
-  email     String    @unique @db.VarChar(255)
-  password  String    @db.VarChar(255)
-  role      String    @db.VarChar(255)
-  createdat DateTime? @default(now()) @db.Timestamp(6)
-  updatedat DateTime? @default(now()) @db.Timestamp(6)
-  firstName String    @db.VarChar(255)
-  lastName  String    @db.VarChar(255)
-  userName  String    @db.VarChar(255)
+  id                Int                @id @default(autoincrement())
+  email             String             @unique @db.VarChar(255)
+  password          String             @db.VarChar(255)
+  role              String             @db.VarChar(255)
+  createdat         DateTime?          @default(now()) @db.Timestamp(6)
+  updatedat         DateTime?          @default(now()) @db.Timestamp(6)
+  firstName         String             @db.VarChar(255)
+  lastName          String             @db.VarChar(255)
+  userName          String             @db.VarChar(255)
+  InfluencerProfile InfluencerProfile?
 
   @@index([email], map: "idx_user_email")
 }
