@@ -3,8 +3,8 @@ import { DecodeJWTToken, VerifyJWTToken } from "../utils/Auth.util";
 import { createErrorResponse } from '../utils/response.util';
 
 const whitelist = [
-    '/api/v1/signup',
-    '/api/v1/login'
+    '/api/v1/auth/login',
+    '/api/v1/auth/signup'
 ];
 
 export const Authorize = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
@@ -12,20 +12,25 @@ export const Authorize = async (req: Request, res: Response, next: NextFunction)
         return next();
     }
 
-    const token = req.header('Authorization');
+    const authHeader = req.header('Authorization');
+    if (!authHeader) {
+        res.status(401).json(createErrorResponse('Unauthorized', 401));
+        return;
+    }
 
+    const token = authHeader.split(' ')[1]; // Extract the token from the "Bearer <token>" format
     if (!token) {
         res.status(401).json(createErrorResponse('Unauthorized', 401));
         return;
     }
 
     try {
-        VerifyJWTToken(token);
+       VerifyJWTToken(token);
         const decoded = await DecodeJWTToken(token);
         res.locals.user = decoded;
         next();
     } catch (error) {
         console.error('Authorization error:', error);
-        res.status(401).json({ error: 'Unauthorized' });
+        res.status(401).json(createErrorResponse('Unauthorized', 401));
     }
 };

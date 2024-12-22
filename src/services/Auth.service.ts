@@ -6,7 +6,7 @@ import { findUserByEmail, createUser } from "../repository/user.repository";
 import { GeneratesJWTToken, passwordHash } from "../utils/Auth.util";
 import bcrypt from 'bcrypt';
 
-class AuthService {
+export default class AuthService {
     /**
      * Registers a new user in the system.
      * 
@@ -60,6 +60,23 @@ class AuthService {
      * @param password - The password of the user attempting to log in.
      * @returns An object containing the email and password of the authenticated user.
      */
+    /**
+     * Authenticates a user based on provided credentials.
+     *
+     * @param {LoginDTO} UserCredential - The user's login credentials.
+     * @returns {Promise<ResponseDTO>} A promise that resolves to a response object containing either a success message with a JWT token or an error message.
+     *
+     * @throws {Error} If there is an error during password comparison.
+     *
+     * @example
+     * const credentials = { email: 'user@example.com', password: 'password123' };
+     * const response = await authService.login(credentials);
+     * if (response.status === 200) {
+     *   console.log('Login successful:', response.data);
+     * } else {
+     *   console.log('Login failed:', response.message);
+     * }
+     */
     public async login(UserCredential: LoginDTO): Promise<ResponseDTO> {
         // handle login
         const user = await findUserByEmail(UserCredential.email);
@@ -94,5 +111,3 @@ class AuthService {
         return createSuccessResponse(token, 'Login successful', 200);
     }
 }
-
-export default AuthService;
