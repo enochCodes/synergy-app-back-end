@@ -1,6 +1,6 @@
 import jwt from 'jsonwebtoken';
 import bcrypt from 'bcrypt';
-import { UserDTO } from '../dto/user.dto';
+import { UserDTO } from '../dtos/user.dto';
 import { Config } from '../config/config';
 
 const config = new Config();

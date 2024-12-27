@@ -1,6 +1,6 @@
-import { UserSignUpDTO } from "../dto/signup.user.dto";
-import { LoginDTO } from "../dto/Login.user.dto";
-import { ResponseDTO } from "../dto/response.dto";
+import { UserSignUpDTO } from "../dtos/signup.user.dto";
+import { LoginDTO } from "../dtos/Login.user.dto";
+import { ResponseDTO } from "../dtos/response.dto";
 import { createErrorResponse, createSuccessResponse } from "../utils/response.util";
 import { findUserByEmail, createUser } from "../repository/user.repository";
 import { GeneratesJWTToken, passwordHash } from "../utils/Auth.util";
