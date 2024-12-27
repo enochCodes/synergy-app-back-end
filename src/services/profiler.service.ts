@@ -1,6 +1,6 @@
 // Purpose: Contains the service for setting the profile of the user as a creator or a business.
-import { ResponseDTO } from '../dto/response.dto';
-import { setCreatorProfileDTO } from '../dto/profile.dto';
+import { ResponseDTO } from '../dtos/response.dto';
+import { setCreatorProfileDTO } from '../dtos/profile.dto';
 import { findUserByEmail, updateUser } from '../repository/user.repository';
 import { createErrorResponse, createSuccessResponse } from '../utils/response.util';
 import { setProfile, FindCreatorProfile } from '../repository/profiler.repository';

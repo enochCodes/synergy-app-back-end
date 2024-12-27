@@ -6,8 +6,8 @@ it also uses the profiler service to get the profiled user
 import { Request, Response } from 'express';
 // import { createErrorResponse, createSuccessResponse } from '../utils/response';
 import { ProfilerService } from '../services/profiler.service';
-import { ResponseDTO } from '../dto/response.dto';
-import { setCreatorProfileDTO } from '../dto/profile.dto';
+import { ResponseDTO } from '../dtos/response.dto';
+import { setCreatorProfileDTO } from '../dtos/profile.dto';
 
 const profilerService = new ProfilerService();
 

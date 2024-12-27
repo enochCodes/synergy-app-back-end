@@ -1,0 +1,2 @@
+-- AlterTable
+ALTER TABLE "Campaigns" ALTER COLUMN "updatedAt" SET DEFAULT CURRENT_TIMESTAMP;

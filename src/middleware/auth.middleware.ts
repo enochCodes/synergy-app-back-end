@@ -34,3 +34,12 @@ export const Authorize = async (req: Request, res: Response, next: NextFunction)
         res.status(401).json(createErrorResponse('Unauthorized', 401));
     }
 };
+
+export const BussinessOnly = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+    const reqUser = res.locals.user;
+    if (reqUser.role !== 'BUSINESS') {
+        res.status(401).json(createErrorResponse('Unauthorized', 401));
+        return;
+    }
+    next();
+};

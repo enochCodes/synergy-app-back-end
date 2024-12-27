@@ -9,4 +9,4 @@ const injectAuthRouters = (app: Application) => {
     app.post('/api/v1/auth/login', authController.Login);
 }
 
-export default injectAuthRouters
+export default injectAuthRouters;

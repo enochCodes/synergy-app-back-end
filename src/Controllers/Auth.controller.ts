@@ -1,7 +1,7 @@
 // auth handler
 import { Request, Response } from 'express';
-import { UserSignUpDTO } from '../dto/signup.user.dto';
-import { LoginDTO } from '../dto/Login.user.dto';
+import { UserSignUpDTO } from '../dtos/signup.user.dto';
+import { LoginDTO } from '../dtos/Login.user.dto';
 import AuthService from '../services/Auth.service';
 
 const authService = new AuthService();

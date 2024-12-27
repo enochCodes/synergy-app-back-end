@@ -7,6 +7,28 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+model Sector {
+  sector_id   Int         @id @default(autoincrement())
+  name        String      @db.VarChar(255)
+  description String
+  Campaigns   Campaigns[]
+}
+
+model Campaigns {
+  campaign_id Int      @id @default(autoincrement())
+  business_id Int
+  title       String   @db.VarChar(255)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @default(now())
+  description String
+  budget      Int
+  endDate     DateTime
+  sector_id   Int
+  startDate DateTime
+  User        User     @relation(fields: [business_id], references: [id], onDelete: Cascade, map: "business_Id_fkey")
+  Sector      Sector   @relation(fields: [sector_id], references: [sector_id], onDelete: Cascade, map: "sector_id_fkey")
+}
+
 model InfluencerProfile {
   profile_id    Int    @id @default(autoincrement())
   influencer_id Int    @unique
@@ -19,11 +41,12 @@ model User {
   email             String             @unique @db.VarChar(255)
   password          String             @db.VarChar(255)
   role              String             @db.VarChar(255)
-  createdat         DateTime?          @default(now()) @db.Timestamp(6)
-  updatedat         DateTime?          @default(now()) @db.Timestamp(6)
   firstName         String             @db.VarChar(255)
   lastName          String             @db.VarChar(255)
   userName          String             @db.VarChar(255)
+  createdAt         DateTime?          @default(now()) @db.Timestamp(6)
+  updatedAt         DateTime?          @default(now()) @db.Timestamp(6)
+  Campaigns         Campaigns[]
   InfluencerProfile InfluencerProfile?
 
   @@index([email], map: "idx_user_email")

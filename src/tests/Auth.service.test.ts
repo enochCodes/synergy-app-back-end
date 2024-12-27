@@ -1,8 +1,8 @@
 import AuthService from '../services/Auth.service';
 import { findUserByEmail, createUser } from '../repository/user.repository';
 import { GeneratesJWTToken, passwordHash } from '../utils/Auth.util';
-import { UserSignUpDTO } from '../dto/signup.user.dto';
-import { LoginDTO } from '../dto/Login.user.dto';
+import { UserSignUpDTO } from '../dtos/signup.user.dto';
+import { LoginDTO } from '../dtos/Login.user.dto';
 import bcrypt from 'bcrypt';
     jest.mock('../repository/user.repository');
     jest.mock('../utils/Auth.util');
