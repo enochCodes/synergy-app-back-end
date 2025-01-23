@@ -4,7 +4,7 @@ import { BussinessOnly } from "../middleware/auth.middleware";
 
 const campaignController = new CampaignController();
 // campaign routers
-const InjectCampaignRouters = (app: Application) => {
+const injectCampaignRouters = (app: Application) => {
   app.post(
     "/api/v1/campaign",
     BussinessOnly,
@@ -24,4 +24,4 @@ const InjectCampaignRouters = (app: Application) => {
   app.delete("/api/v1/mycampaign/:id", campaignController.deletemyCampaign);
 };
 
-export default InjectCampaignRouters;
+export default injectCampaignRouters;

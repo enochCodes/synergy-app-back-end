@@ -1,25 +1,33 @@
-import dotenv from 'dotenv';
+import dotenv from "dotenv";
+import cors from "cors";
 import { Authorize } from "./middleware/auth.middleware";
-
+import injectAuthRouters from "./routers/Auth.routers";
+import injectCreatorsRouters from "./routers/creators.routers";
+import injectCampaignRouters from "./routers/campaign.routers";
 
 // Load environment variables from .env file
 dotenv.config();
 
-import express from 'express';
-const app = express()
+import express from "express";
+const app = express();
 const port = process.env.PORT || 3000;
-import injectAuthRouters from './routers/Auth.routers';
-import injectProfilerRouters from './routers/Profiler.routers';
-import InjectCampaignRouters from './routers/campaign.routers';
+
+app.use(
+  cors({
+    origin: "http://localhost:5173,  http://192.168.1.8:5173", // Replace this with your frontend URL
+    methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+    allowedHeaders: ["Content-Type", "Authorization"],
+  }),
+);
 
 app.use(express.json());
 app.use(Authorize);
 //, inject the routers here
 // inject auth routers
 injectAuthRouters(app);
-injectProfilerRouters(app);
-InjectCampaignRouters(app);
+injectCreatorsRouters(app);
+injectCampaignRouters(app);
 
 app.listen(port, (): void => {
-    console.log(`app listening on port ${port}`)
-})
+  console.log(`app listening on port ${port}`);
+});

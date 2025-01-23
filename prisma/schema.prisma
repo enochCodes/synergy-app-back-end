@@ -24,16 +24,20 @@ model Campaigns {
   budget      Int
   endDate     DateTime
   sector_id   Int
-  startDate DateTime
+  startDate   DateTime
   User        User     @relation(fields: [business_id], references: [id], onDelete: Cascade, map: "business_Id_fkey")
   Sector      Sector   @relation(fields: [sector_id], references: [sector_id], onDelete: Cascade, map: "sector_id_fkey")
 }
 
 model InfluencerProfile {
-  profile_id    Int    @id @default(autoincrement())
-  influencer_id Int    @unique
-  niche         String @db.VarChar(255)
-  User          User   @relation(fields: [influencer_id], references: [id], onDelete: Cascade, map: "InfluencerProfile_Id_fkey")
+  profile_id    Int      @id @default(autoincrement())
+  influencer_id Int      @unique
+  niches        String[]
+  bio           String
+  facebookUrl   String   @db.VarChar(255)
+  instagramUrl  String   @db.VarChar(255)
+  tiktokUrl     String   @db.VarChar(255)
+  User          User     @relation(fields: [influencer_id], references: [id], onDelete: Cascade, map: "InfluencerProfile_Id_fkey")
 }
 
 model User {

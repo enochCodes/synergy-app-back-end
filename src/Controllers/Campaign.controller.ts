@@ -1,10 +1,12 @@
 import { Request, Response } from "express";
-import { createErrorResponse } from "../utils/response.util";
 import { CampaignDTO } from "../dtos/campaign.dto";
 import { CampaignService } from "../services/Campaign.service";
 import { ResponseDTOwithObject } from "../dtos/response.dto";
 import { validateCampaignUpdate } from "../validators/campaign.validator";
-import { createSuccessResponse } from "../utils/response.util";
+import {
+  createSuccessResponse,
+  createErrorResponse,
+} from "../utils/response.util";
 import { GetCampaignByID } from "../repository/campagin.repository";
 
 const campaignService = new CampaignService();
@@ -77,7 +79,8 @@ export class CampaignController {
       // Validate input
       const { error } = validateCampaignUpdate(req.body);
       if (error) {
-        res.status(400).json({ error: error.details[0].message });
+        const response = createErrorResponse(error.details[0].message, 400);
+        res.status(response.status).json(response);
         return;
       }
       const CampaignData = await GetCampaignByID(compaignId);
